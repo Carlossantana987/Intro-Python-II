@@ -1,18 +1,29 @@
 from room import Room
 from player import Player
+from items import Item
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance","North of you, the cave mount beckons", ),
 
-    'foyer':    Room("Foyer", "Dim light filters in from the south. Dusty passages run north and east.",),
+    'foyer':    Room("Foyer", "Dim light filters in from the south. Dusty passages run north and east.",['r','r']),
 
-    'overlook': Room("Grand Overlook", "A steep cliff appears before you, falling into the darkness. Ahead to the north, a light flickers in the distance, but there is no way across the chasm."),
+    'overlook': Room("Grand Overlook", "A steep cliff appears before you, falling into the darkness. Ahead to the north, a light flickers in the distance, but there is no way across the chasm.",['l']),
 
     'narrow':   Room("Narrow Passage", "The narrow passage bends here from west to north. The smell of gold permeates the air."),
 
-    'treasure': Room("Treasure Chamber", "You've found the long-lost treasure chamber! Sadly, it has already been completely emptied by earlier adventurers. The only exit is to the south."),
+    'treasure': Room("Treasure Chamber", "You've found the long-lost treasure chamber! Sadly, it has already been completely emptied by earlier adventurers. The only exit is to the south.",['s']),
+}
+
+# Declaring all Items
+
+items = {
+    'r': Item("Rubber Ducky", "A cute but deadly toy"),
+
+    'l': Item("Legos", "Step on these bad boys and you'll gain the abiliy to use a string of curse words"),
+
+    's': Item("Scissors","Please dont run with these things. you'll hurt yourself"),
 }
 
 
@@ -50,28 +61,24 @@ player = Player(name , room['outside'])
 
 valid =['n','s','e','w']
 
+
+
+
 while gameActive:
 
-    print(player)
+    print(f"\nCurrent Location: {player.current_room.name}")
 
-    userInput = input('Please enter your direction [N] [S] [E] [W] then [ENTER]: ')
+    userInput = input('\nPlease enter your direction [N] [S] [E] [W] then [ENTER]: ')
 
     if userInput in valid :
         player.move(userInput)
+
+    elif userInput == 't':
+        player.addToIventory()
+        print(player.inventory)
 
     elif userInput == 'q':
         gameActive = False
 
     else:
         print("\n!!!! Invalid Input !!!!!")
-
-
-
-
-
-
-
-
-
-
-
