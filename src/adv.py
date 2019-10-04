@@ -7,24 +7,26 @@ from items import Item
 room = {
     'outside':  Room("Outside Cave Entrance","North of you, the cave mount beckons", ),
 
-    'foyer':    Room("Foyer", "Dim light filters in from the south. Dusty passages run north and east.",['r','r']),
+    'foyer':    Room("Foyer", "Dim light filters in from the south. Dusty passages run north and east.",['sword']),
 
-    'overlook': Room("Grand Overlook", "A steep cliff appears before you, falling into the darkness. Ahead to the north, a light flickers in the distance, but there is no way across the chasm.",['l']),
+    'overlook': Room("Grand Overlook", "A steep cliff appears before you, falling into the darkness. Ahead to the north, a light flickers in the distance, but there is no way across the chasm.",['shield']),
 
     'narrow':   Room("Narrow Passage", "The narrow passage bends here from west to north. The smell of gold permeates the air."),
 
-    'treasure': Room("Treasure Chamber", "You've found the long-lost treasure chamber! Sadly, it has already been completely emptied by earlier adventurers. The only exit is to the south.",['s']),
+    'treasure': Room("Treasure Chamber", "You've found the long-lost treasure chamber! Sadly, it has already been completely emptied by earlier adventurers. The only exit is to the south.",['Coin']),
 }
 
 # Declaring all Items
 
 items = {
-    'r': Item("Rubber Ducky", "A cute but deadly toy"),
+    'coins': Item("Coin", "golden coin"),
 
-    'l': Item("Legos", "Step on these bad boys and you'll gain the abiliy to use a string of curse words"),
+    'shield': Item("Legos", "a shield for protection"),
 
-    's': Item("Scissors","Please dont run with these things. you'll hurt yourself"),
+    'sword': Item("Sword","Please dont run with this things. you'll hurt yourself"),
 }
+
+
 
 
 # Link rooms together
@@ -37,6 +39,9 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+
+
 
 #
 # Main
@@ -61,7 +66,7 @@ player = Player(name , room['outside'])
 
 valid =['n','s','e','w']
 
-
+inventory = 'i'
 
 
 while gameActive:
@@ -73,12 +78,16 @@ while gameActive:
     if userInput in valid :
         player.move(userInput)
 
-    elif userInput == 't':
-        player.addToIventory()
-        print(player.inventory)
+    elif userInput in inventory:
+        print(f"{player.inventory}")
 
     elif userInput == 'q':
         gameActive = False
+
+    elif userInput not in valid:
+        player.handleVerb(userInput)
+
+
 
     else:
         print("\n!!!! Invalid Input !!!!!")

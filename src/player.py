@@ -18,9 +18,24 @@ class Player:
         else:
             print(f"\nYou just smacked a wall Genius!\n")
 
-    def addToIventory(self):
-        removedItem = self.current_room.item.pop()
-        addedItem = self.inventory.append(removedItem)
-        return addedItem
+    def handleVerb(self, verb):
+        verb = verb.split(" ")
+        if verb[0] == "take":
+            if verb[1] in self.current_room.item:
+                self.current_room.item.remove(verb[1])
+                self.inventory.append(verb[1])
+                return print(f"You have picked up {verb[1]}")
+            else:
+                print("Invalid item take")
+        elif verb[0] == "drop":
+            if verb[1] not in self.current_room.item:
+                self.inventory.remove(verb[1])
+                self.current_room.item.append(verb[1])
+                return print(f"You have dropped {verb[1]}")
+            else:
+                print("Invalid Item drop")
+
+
+
 
 
